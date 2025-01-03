@@ -23,6 +23,7 @@ grf {
 #define XOFFSET -124
 #define YOFFSET -182
 
+
 template t_underlay(name){
     [0*(X_SIZE+8), 0, X_SIZE, Y_SIZE, XOFFSET, YOFFSET, name+"01_32bpp.png"]
     [1*(X_SIZE+8), 0, X_SIZE, Y_SIZE, XOFFSET, YOFFSET, name+"01_32bpp.png"]
@@ -112,6 +113,20 @@ template t_precombined(name){
     [0*(X_SIZE+8),0,X_SIZE,Y_SIZE, XOFFSET, YOFFSET, name+"63_32bpp.png"] // 63 63 0
 }
 
+template t_pylons(name){
+    [0, 0, 256, 384, 0, 0, name+"_pylon_32bpp.png"]
+    [264, 0, 256, 310, 0, 0, name+"_pylon_32bpp.png"]
+    [528, 0, 256, 384, 0, 0, name+"_pylon_32bpp.png"]
+    [792, 0, 256, 310, 0, 0, name+"_pylon_32bpp.png"]
+    [1056, 0, 256, 384, 0, 0, name+"_pylon_32bpp.png"]
+    [1320, 0, 256, 310, 0, 0, name+"_pylon_32bpp.png"]
+    [1584, 0, 256, 384, 0, 0, name+"_pylon_32bpp.png"]
+    [1848, 0, 256, 310, 0, 0, name+"_pylon_32bpp.png"]   
+}
+
+spriteset (s_pylon_catenary, ZOOM_LEVEL_IN_4X, BIT_DEPTH_32BPP){
+    t_pylons("vox/catenary")
+}
 spriteset (s_track, ZOOM_LEVEL_IN_4X, BIT_DEPTH_32BPP) {
     t_underlay("vox/normal/")
 }
@@ -164,7 +179,7 @@ item (FEAT_RAILTYPES, highspeed_track, 2) {
         new_engine_text:            string(STR_GRF_NAME);
         compatible_railtype_list:   ["RAIL", "ELRL", "MONO", "MGLV"];
         powered_railtype_list:      ["RAIL", "ELRL", "MONO", "MGLV"];
-        railtype_flags:             bitmask(RAILTYPE_FLAG_PRECOMBINED);
+        railtype_flags:             bitmask(RAILTYPE_FLAG_CATENARY,RAILTYPE_FLAG_PRECOMBINED);
         curve_speed_multiplier:     1;
         station_graphics:           RAILTYPE_STATION_NORMAL;
         construction_cost:          1;
@@ -175,5 +190,6 @@ item (FEAT_RAILTYPES, highspeed_track, 2) {
     graphics {
         underlay:                   s_track_highspeed;
         precombined:                s_track_precombined_highspeed;
+        catenary_pylons:            s_pylon_catenary;
     }
 }
